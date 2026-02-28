@@ -11,8 +11,7 @@ userRouter.post(
     "/auth/get-otp",
     validate(UserPayloadSchema),
     async (req: express.Request, res: express.Response) => {
-        const { email } = req.body;
-
+        const { email } = req.parsed.body;
 
         const existingOtp = await redisClient.get(`otp:${email}`);
         if (existingOtp) {
