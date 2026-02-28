@@ -12,7 +12,7 @@ import Vars from "./globals";
 import { errorHandler } from "./utils/apiUtils"
 import DataBase from "./database";
 import { connectRedis } from './redisCache';
-import apiRouter from "router";
+import apiRouter from "routes";
 
 
 dotenv.config()
