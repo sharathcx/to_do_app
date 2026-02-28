@@ -12,7 +12,7 @@ import Vars from "./globals";
 import { errorHandler } from "./utils/apiUtils"
 import DataBase from "./database";
 import { connectRedis } from './redisCache';
-import apiRouter from "routes";
+import apiRouter from "./routes";
 
 
 dotenv.config()
@@ -62,5 +62,6 @@ bootstrap().catch((err) => {
     console.error('❌ Failed to start app:', err);
     process.exit(1);
 });
+
 
 

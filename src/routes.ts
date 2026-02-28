@@ -1,6 +1,6 @@
 import { Router, Response, Request, NextFunction } from "express";
-import { fastAPIfyRouter } from "fastapify";
-import userRouter from "modules/user/user.routes";
+import { fastAPIfyRouter } from "./fastapify";
+import userRouter from "./modules/user/user.routes";
 
 const apiRouter = fastAPIfyRouter(Router())
 

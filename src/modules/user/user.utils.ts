@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import { redisClient } from "redisCache";
+import { redisClient } from "../../redisCache";
 import { email } from "zod";
 
 dotenv.config()

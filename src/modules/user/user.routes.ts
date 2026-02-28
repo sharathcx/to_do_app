@@ -1,8 +1,8 @@
 import express, { Router } from "express";
-import { validate } from "fastapify";
+import { validate } from "../../fastapify";
 import { UserPayloadSchema } from "./user.schemas";
 import { generateOTP, saveOTP, sendOTPEmail } from "./user.utils";
-import { redisClient } from "redisCache";
+import { redisClient } from "../../redisCache";
 
 
 const userRouter = Router();
