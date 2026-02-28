@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { redisClient } from "redisCache";
+import { email } from "zod";
 
 dotenv.config()
 
@@ -24,3 +26,15 @@ export const sendOTPEmail = async (email: string, otp: string) => {
 export const generateOTP = () => {
     return Math.floor(100000 + Math.random() * 90000).toString();
 };
+
+export const saveOTP = async (email: string, otp: string) => {
+    await redisClient.set(`otp:${email}`, otp, {
+        EX: 300
+    });
+};
+
+export const verifyOTP = async (email: string, otp: string) => {
+    const storedOtp = await redisClient.get(`otp:${email}`);
+    return storedOtp === otp;
+}
+

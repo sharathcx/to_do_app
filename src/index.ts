@@ -8,14 +8,16 @@ import mongoose from "mongoose";
 import { error } from "console";
 import dotenv from "dotenv"
 import fastAPIfy from "./fastapify";
-import Vars from "globals";
+import Vars from "./globals";
 import { errorHandler } from "./utils/apiUtils"
 import DataBase from "./database";
+import { connectRedis } from './redisCache';
+import apiRouter from "router";
 
 
 dotenv.config()
 
-async function bootstrap(){
+async function bootstrap() {
     const app = fastAPIfy(express(), Vars.SERVER_URL);
     app.use(cookieParser());
     app.use(cors({
@@ -28,8 +30,6 @@ async function bootstrap(){
 
                 // Allowed conditions:
                 // 1. localhost:3000
-                // 2. rapidstore.app
-                // 3. any subdomain of rapidstore.app
                 if (
                     (hostname === "localhost") ||
                     hostname === "rapidstore.app" || hostname === 'hoppscotch.io' ||
@@ -47,11 +47,14 @@ async function bootstrap(){
     }))
     app.use(json());
     app.use(errorHandler);
+    app.use('/api', apiRouter);
+
     await DataBase.connect(Vars.MONGO_URI, "ToDo");
+    await connectRedis();
     const PORT = '3000';
-    app.listen(parseInt(PORT),() =>{
+    app.listen(parseInt(PORT), () => {
         console.log(`Listening on http://localhost:${PORT}`);
-    } );
+    });
 
 }
 
