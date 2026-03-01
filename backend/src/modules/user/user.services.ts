@@ -1,15 +1,9 @@
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-import { redisClient } from "../../redisCache";
-import { email } from "zod";
 import { Resend } from "resend";
-
-dotenv.config()
+import { redisClient } from "../../redisCache";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendOTPEmail = async (email: string, otp: string) => {
-    try {
         const data = await resend.emails.send({
             from: "onboarding@resend.dev",
             to: email,
@@ -23,15 +17,6 @@ export const sendOTPEmail = async (email: string, otp: string) => {
         });
         console.log("Resend API response:", data);
         return data;
-    } catch (error) {
-        console.error("Resend API error:", error);
-        throw error;
-    }
-};
-
-
-export const generateOTP = () => {
-    return Math.floor(100000 + Math.random() * 90000).toString();
 };
 
 export const saveOTP = async (email: string, otp: string) => {
